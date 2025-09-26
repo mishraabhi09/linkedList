@@ -60,21 +60,51 @@ Node *insertAtKthPlace(Node *head, int ele, int k)
 {
 
     if (head == nullptr)
-        return head;
-        
+    {
+        if (k == 1)
+        {
+            return new Node(ele, nullptr);
+        }
+        else
+            return nullptr;
+    }
     if (k == 1)
     {
-        Node *temp = new Node(val, head);
+        Node *temp = new Node(ele, head);
         return temp;
     }
+
+    Node *temp = head;
+    int cnt = 0;
+    while (temp != nullptr)
+    {
+        cnt++;
+        if (cnt == k - 1)
+        {
+            Node *newNode = new Node(ele, nullptr);
+            newNode->next = temp->next;
+            temp->next = newNode;
+            break;
+        }
+        temp = temp->next;
+    }
+
+    return head;
 }
 
 int main()
 {
+
+    int k;
     vector<int> arr = {12, 13, 14, 15};
     Node *head = ConvertArraytoLL(arr);
     // head = insertAtFront(head, 100);
-    head = insertAtlast(head, 100);
+    // head = insertAtlast(head, 100);
+
+    cout << "Enter k" << endl;
+    cin >> k;
+
+    head = insertAtKthPlace(head, 19, k);
 
     // printing the linked list-->>
     Node *temp = head;
