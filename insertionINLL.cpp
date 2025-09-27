@@ -16,6 +16,18 @@ public:
     }
 };
 
+// Linked List print function-->>
+void printLL(Node *head)
+{
+
+    Node *temp = head;
+    while (temp != nullptr)
+    {
+        cout << temp->data << " ";
+        temp = temp->next;
+    }
+}
+
 // Conversion of Array into linked list-->>
 Node *ConvertArraytoLL(vector<int> arr)
 {
@@ -92,25 +104,57 @@ Node *insertAtKthPlace(Node *head, int ele, int k)
     return head;
 }
 
+// Insertion before particular node-->>
+Node *insertBeforeGivenNode(Node *head, int ele, int val)
+{
+
+    if (head == nullptr)
+    {
+        return nullptr;
+    }
+
+    if (head->data == val)
+    {
+        Node *newNode = new Node(ele, nullptr);
+        return newNode;
+    }
+
+    Node *temp = head;
+    while (temp->next != nullptr)
+    {
+        if (temp->next->data == val)
+        {
+            Node *newNode = new Node(ele, nullptr);
+            newNode->next = temp->next;
+            temp->next = newNode;
+            break;
+        }
+        temp = temp->next;
+    }
+    return head;
+};
+
 int main()
 {
 
     int k;
+    int val;
     vector<int> arr = {12, 13, 14, 15};
     Node *head = ConvertArraytoLL(arr);
     // head = insertAtFront(head, 100);
     // head = insertAtlast(head, 100);
 
-    cout << "Enter k" << endl;
-    cin >> k;
+    // for Kth Node Function-->>
+    // cout << "Enter k" << endl;
+    // cin >> k;
 
-    head = insertAtKthPlace(head, 19, k);
+    // head = insertAtKthPlace(head, 19, k);
 
-    // printing the linked list-->>
-    Node *temp = head;
-    while (temp != nullptr)
-    {
-        cout << temp->data << " ";
-        temp = temp->next;
-    }
+    // for BeforeGivenNode Function-->>
+    cout << "Enter val" << endl;
+    cin >> val;
+
+    head = insertBeforeGivenNode(head, 20, val);
+
+    printLL(head);
 };
