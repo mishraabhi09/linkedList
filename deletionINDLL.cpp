@@ -47,7 +47,7 @@ Node *convertArrayto2LL(vector<int> arr)
     return head;
 };
 
-// Deletion of Node -->>
+// Deletion of head -->>
 Node *deleteHead(Node *head)
 {
 
@@ -67,6 +67,7 @@ Node *deleteHead(Node *head)
     return head;
 }
 
+// deletion of tail-->>
 Node *deleteTail(Node *head)
 {
     if (head == nullptr || head->next == nullptr)
@@ -86,27 +87,33 @@ Node *deleteTail(Node *head)
     return head;
 }
 
+// deletion of kth node in DLL-->>
 Node *deleteKthNodeIN2LL(Node *head, int k)
 {
+
     if (head == nullptr)
         return nullptr;
 
     int cnt = 0;
-    Node *temp = head;
+    Node *KthNode = head;
 
-    while (temp != nullptr)
+    while (KthNode != nullptr)
     {
         cnt++;
         if (cnt == k)
             break;
-        temp = temp->next;
+        KthNode = KthNode->next;
     }
 
-    Node *prev = temp->back;
-    Node *front = temp->next;
+    if (KthNode == nullptr)
+        return head;
+
+    Node *prev = KthNode->back;
+    Node *front = KthNode->next;
 
     if (prev == nullptr && front == nullptr)
     {
+        delete KthNode;
         return nullptr;
     }
     else if (prev == nullptr)
@@ -121,12 +128,15 @@ Node *deleteKthNodeIN2LL(Node *head, int k)
     prev->next = front;
     front->back = prev;
 
-    temp->next = nullptr;
-    temp->back = nullptr;
-    delete temp;
+    KthNode->next = nullptr;
+    KthNode->back = nullptr;
 
+    delete KthNode;
     return head;
 }
+
+// deletion of particular node from DLL-->
+
 
 int main()
 {
@@ -137,12 +147,13 @@ int main()
     cout << "Original doubly linked list-->>" << endl;
     print2LL(head);
 
+    // cout << endl
+    //      << "Enter the value of k :";
+    // cin >> k;
+    // cout << endl
+    //      << "After deletion of tail-->>" << endl;
     cout << endl
-         << "Enter the value of k :";
-    cin >> k;
-    cout << endl
-         << "After deletion of tail-->>" << endl;
-    head = deleteKthNodeIN2LL(head, k);
+         << removeGivenNode(head,5) << " ";
     print2LL(head);
     return 0;
 }
